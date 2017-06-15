@@ -1,7 +1,7 @@
 import java.io.*;
 
 class TowerApp {
-    static int nDisks; // ディスクの数
+    static int nDisks; 
 
     public TowerApp(int inputNum){
         nDisks = inputNum;
@@ -11,8 +11,14 @@ class TowerApp {
         doTowersEach(nDisks, from, to, inter);
     }
 
-    public static void doTowersEach(int topN, char from, char to, char inter) {    // 手順を出力する関数
-        // 【ここにプログラムを追加】
-        // 再帰を用いたプログラムを記述する。
+    public static void doTowersEach(int topN, char from, char to, char inter) {   
+        if (topN==1){
+            System.out.println("Move disk 1 from "+from+" to "+to);
+        }
+        else{ 
+            doTowersEach(topN-1,from,inter,to);
+            System.out.println("Move disk "+String.valueOf(topN)+" from "+from+" to "+to);
+            doTowersEach(topN-1,inter,to,from);
+        }
     }
 }

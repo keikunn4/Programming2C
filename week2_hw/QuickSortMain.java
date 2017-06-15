@@ -6,9 +6,8 @@ import java.io.FileWriter;
 
 class QuickSortMain {
 	static final String INPUT_FILE_NAME = "data.txt";
-	static final String OUTPUT_FILE_NAME = "quick_学籍番号.txt";
+	static final String OUTPUT_FILE_NAME = "quick_03-170971.txt";
 
-	//data数を数える
 	public static int countLine(String fileName) {
 		int count = 0;
 		try {
@@ -28,7 +27,7 @@ class QuickSortMain {
 		return count;
 	}
 
-	//dataを配列に直す
+
 	public static int[] readInt(String fileName) {
 		int count = 0;
 		int[] data = new int[countLine(fileName)];

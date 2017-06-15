@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 
+
 public class KochViewer extends Application{
 
 	private final int w = 800;
@@ -29,21 +30,19 @@ public class KochViewer extends Application{
 	private Button button;
 	private int depth;
 
-	// コッホ曲線を描く再帰関数。level は、コッホ曲線のレベル。
 	private void drawKoch (int level, double x1, double y1, double x2, double y2){
-		//［ (１)ここに再帰関数を書く (たぶん２０行以下程度のプログラム) ］
-		// 画面上に線分を描く関数は、drawLine (double x1, double y1,double x2, double y2)
-		// を用いること。
-
-		//
-		// *** ここからプログラムを追加する
-		//
-		//
-	 	// *** 追加はここまで
-	 	//
+			double sqrt3 = Math.sqrt(3.0);
+		if (level==0) {drawLine (x1, y1, x2, y2);}
+		else{
+			double x3 = (1.0/2.0)*((x1+x2)+(1.0/sqrt3)*(y1-y2));
+			double y3 = (1.0/2.0)*((y1+y2)-(1.0/sqrt3)*(x1-x2));
+			drawKoch (level-1, x1, y1, (2*x1+x2)/3, (2*y1+y2)/3);
+			drawKoch (level-1, (2*x1+x2)/3, (2*y1+y2)/3, x3, y3);
+			drawKoch (level-1, x3, y3, (x1+2*x2)/3, (y1+2*y2)/3);
+			drawKoch (level-1, (x1+2*x2)/3, (y1+2*y2)/3, x2, y2);
+		}
 	}
-
-	//線分を画面に描画する。
+	
 	private void drawLine (double x1, double y1, double x2, double y2){
 		int sx = (int)((x1 - xmin)*ratio);
 		int sy = (int)((y1 - ymin)*ratio);
@@ -54,13 +53,11 @@ public class KochViewer extends Application{
 		palette.getChildren().add(line);
 	}
 
-	//再描画をする。
 	private void repaint(){
-		palette.getChildren().setAll();//paletteに登録してあるものをリセット(消す)
-		drawKoch(depth, 0.0, 0.0, 1.0, 0.0);//再度描画する
+		palette.getChildren().setAll();
+		drawKoch(depth, 0.0, 0.0, 1.0, 0.0);
 	}
 
-	// アプレット起動時に一度だけ呼ばれる関数
 	@Override
 	public void init(){
 		depth = 1;
@@ -82,10 +79,10 @@ public class KochViewer extends Application{
 		value = new TextField("1");
 		value.setPrefWidth(30);
 		button = new Button("Button");
-		button.setOnAction(new EventHandler<ActionEvent>() { //ボタンが押された時に再描画する．
+		button.setOnAction(new EventHandler<ActionEvent>() { 
 			public void handle(ActionEvent event) {
-				depth = Integer.parseInt(value.getText()); //入力された数値を格納
-				repaint(); // 再描画する．
+				depth = Integer.parseInt(value.getText()); 
+				repaint(); 
 			}
 		});
 
