@@ -1,0 +1,38 @@
+public void sort(){//getCount()の値が大きい順にノードの並び変えを行う
+        int nodeNum = countNode();
+        if(nodeNum==0){
+              
+        }else{
+            Snode[] nodes = new Snode[nodeNum];
+            Snode node = head;
+            int n=0;
+            while(node!=null){
+                nodes[n]=node;
+                node = node.getNext();
+                n++;
+            }
+            for(int i=0;i<nodeNum-1;i++){
+                for(int j=i;j<nodeNum;j++){
+                    if(nodes[i].getCount()<nodes[j].getCount()){
+                        Snode dummyNode =nodes[i];
+                        nodes[i] =nodes[j];
+                        nodes[j] = dummyNode;
+                    }
+                }
+            }
+            this.head = nodes[0];
+            for(int i=0;i<nodeNum;i++) {
+                if(i==0) {
+                    nodes[i].setPrev(null);
+                }
+                else{
+                    nodes[i].setPrev(nodes[i-1]); 
+                }
+                if(i==nodeNum-1) { 
+                    nodes[nodeNum-1].setNext(null); 
+                }else{
+                    nodes[i].setNext(nodes[i+1]); 
+                }
+            }    
+        }
+}
