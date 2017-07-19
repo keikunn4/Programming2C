@@ -90,6 +90,28 @@ public class PolygonViewer extends Application {
 		//
 		// *** ここからプログラムを追加する
 		//
+        int n_face = shape.faceList.size();
+        
+        for(int i = 0; i < n_face; i++){
+            
+            Face new_face = shape.faceList.get(i);
+            int n_vertex = new_face.vertices.length;
+        
+            double[] x = new double[n_vertex];
+            double[] y = new double[n_vertex];
+            double[] z = new double[n_vertex];
+        
+            for (int j = 0; j < n_vertex; j++ ){
+                Vertex new_vertex = new_face.vertices[j];
+                x[j] = new_vertex.x;
+                y[j] = new_vertex.y;
+                z[j] = new_vertex.z;
+            }
+        
+            drawPolygon(x, y, z);
+        }
+        
+        
 
 	}
 

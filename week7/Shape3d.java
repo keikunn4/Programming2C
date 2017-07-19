@@ -26,7 +26,7 @@ public class Shape3d{
                 // 現在の文字列のタイプを返します．文字列なら TT_WORD,
                 // 数字なら TT_NUMBER を返します．
                 if (st.ttype == StreamTokenizer.TT_WORD) {
-                    // 文字列のときは sval, 数値 (double) のときは，nvalとします．
+                    // 文字l列のときは sval, 数値 (double) のときは，nvalとします．
                     System.out.println(st.sval);
                     input0.add(st.sval);
                 }
@@ -34,9 +34,9 @@ public class Shape3d{
             // ファイルを閉じます．
             fr.close();
             
-            System.out.println()"file successfully cloed.";
+            System.out.println("file successfully cloed.");
             
-            new String[] input = (String[])input0.toArray();
+            String[] input = (String[])input0.toArray();
             for(int i = 0; i < input.length(); i += get_nargs(input, i) ){
                 if(input[i].equqls("f")){
                     int nindex = Integer.parseInt(input[i+1]);
@@ -62,7 +62,8 @@ public class Shape3d{
         } catch (IOException e) {
             System.out.println ("Error: " + e);
         }
-
+    }
+    
 	private void addVertex (double x, double y, double z){
 		//Vertexを作成して、vertexListに格納する
         Vertex new_Vertex = new Vertex(x,y,z);
@@ -81,7 +82,7 @@ public class Shape3d{
         facelist.add(new_face);
 	}
     
-    private int get_nargs(String[] input, i){
+    private int get_nargs(String[] input, int i){
         //f なら 1+3
         //g なら 1+1+含まれる点の数
         if(input[i].equqls("f")) return 1+3;
