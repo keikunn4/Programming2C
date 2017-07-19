@@ -5,5 +5,8 @@ public class Face{
 
 	public Face(Vertex[] vert){
 		//頂点列を格納
+        vertices = vert;
+        
+        
 	}
 }
