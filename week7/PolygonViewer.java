@@ -90,7 +90,7 @@ public class PolygonViewer extends Application {
 		//
 		// *** ここからプログラムを追加する
 		//
-        int n_face = shape.faceList.size();
+        /*int n_face = shape.faceList.size();
         
         for(int i = 0; i < n_face; i++){
             
@@ -109,7 +109,14 @@ public class PolygonViewer extends Application {
             }
         
             drawPolygon(x, y, z);
-        }
+        }*/
+        double[] x = new double[3];
+        double[] y = new double[3];
+        double[] z = new double[3];
+        x[0]=100;x[1]=0;x[2]=0;
+        y[0]=0;y[1]=100;y[2]=0;
+        z[0]=0;z[1]=0;z[2]=100;
+        drawPolygon(x,y,z);
         
         
 

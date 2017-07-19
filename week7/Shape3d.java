@@ -11,7 +11,7 @@ public class Shape3d{
 		//ファイルを読み込んでvertexListとfaceListに格納する
 		//FileReader, StreamTokenizerを用いる
 		//以前演習でやった例を参照すること
-        LinkedList<String> input0 = new LinkedList<String>();
+        ArrayList<String> input0 = new ArrayList<String>();
  
         try { // ファイル入出力の部分は，try .. catch で囲みます
             // ファイルをオープンするときは，FileReader を使います
@@ -29,27 +29,35 @@ public class Shape3d{
                     // 文字l列のときは sval, 数値 (double) のときは，nvalとします．
                     System.out.println(st.sval);
                     input0.add(st.sval);
+                }else if(st.ttype == StreamTokenizer.TT_NUMBER) {
+                    // 文字l列のときは sval, 数値 (double) のときは，nvalとします．
+                    System.out.println(Double.toString(st.nval));
+                    input0.add(Double.toString(st.nval));
                 }
             }
             // ファイルを閉じます．
             fr.close();
             
-            System.out.println("file successfully cloed.");
-            
+            System.out.println("file successfully parsed.");
+            System.out.println(input0.size());
             String[] input = (String[])input0.toArray();
-            for(int i = 0; i < input.length(); i += get_nargs(input, i) ){
-                if(input[i].equqls("f")){
-                    int nindex = Integer.parseInt(input[i+1]);
-                    int index[] = new int[nindex];
-                    for (int j = 0; j<nindex; j++){
+            
+            System.out.println("file successfully converted.");
+            
+            for(int i = 0; i < input.length; i += get_nargs(input, i) ){
+                System.out.println(i);
+                if(input[i].equals("f")){
+                    int n_index = Integer.parseInt(input[i+1]);
+                    int index[] = new int[n_index];
+                    for (int j = 0; j<n_index; j++){
                         index[j] = Integer.parseInt(input[i+1+1+j]);
                     }
                     addFace(index);
                 }
-                if(input[i].equqls("v")){
-                    int x = Double.parseDouble(input[i+1]);
-                    int y = Double.parseDouble(input[i+2]);
-                    int z = Double.parseDouble(input[i+3]);
+                if(input[i].equals("v")){
+                    double x = Double.parseDouble(input[i+1]);
+                    double y = Double.parseDouble(input[i+2]);
+                    double z = Double.parseDouble(input[i+3]);
                     addVertex(x, y, z);
                 }
             }
@@ -73,19 +81,19 @@ public class Shape3d{
 	private void addFace (int[] index){
 		// 頂点番号の配列が与えられたときに、Faceを新たに生成して
 		// faceListに格納する
-        n = index.length;
+        int n = index.length;
         Vertex[] vertices = new Vertex[n];
         for (int i=0; i<n; i++){
-            vertices.add(vertexList.get(i));
+            vertices[i] = vertexList.get(index[i]);
         }
-        Face new_Face  = new Face(vertices);
-        facelist.add(new_face);
+        Face new_face  = new Face(vertices);
+        faceList.add(new_face);
 	}
     
     private int get_nargs(String[] input, int i){
         //f なら 1+3
         //g なら 1+1+含まれる点の数
-        if(input[i].equqls("f")) return 1+3;
+        if(input[i].equals("f")) return 1+3;
         if(input[i].equals("g")) return 1+1+Integer.parseInt(input[i+1]);
         return 0;
         
