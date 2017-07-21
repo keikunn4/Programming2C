@@ -90,26 +90,25 @@ public class PolygonViewer extends Application {
 		//
 		// *** ここからプログラムを追加する
 		//
-        /*int n_face = shape.faceList.size();
+        int i = 0;
+        Iterator iter = shape.faceList.iterator();
+        while(iter.hasNext()){
+            //System.out.printf("painting face #"); System.out.println(i);i++;
+            Face face = (Face)iter.next();
+            paintFace(face);
+        }
+            
+        /*
+        int n_face = shape.faceList.size();
         
         for(int i = 0; i < n_face; i++){
             
-            Face new_face = shape.faceList.get(i);
-            int n_vertex = new_face.vertices.length;
-        
-            double[] x = new double[n_vertex];
-            double[] y = new double[n_vertex];
-            double[] z = new double[n_vertex];
-        
-            for (int j = 0; j < n_vertex; j++ ){
-                Vertex new_vertex = new_face.vertices[j];
-                x[j] = new_vertex.x;
-                y[j] = new_vertex.y;
-                z[j] = new_vertex.z;
-            }
-        
-            drawPolygon(x, y, z);
-        }*/
+            System.out.printf("painting face #"); System.out.println(i);
+            paintFace( shape.faceList.get(i) );
+       
+        }
+         */
+        /*
         double[] x = new double[3];
         double[] y = new double[3];
         double[] z = new double[3];
@@ -117,11 +116,58 @@ public class PolygonViewer extends Application {
         y[0]=0;y[1]=100;y[2]=0;
         z[0]=0;z[1]=0;z[2]=100;
         drawPolygon(x,y,z);
-        
-        
-
+         */
 	}
+    
+    private void paintFace(Face face){
+        int n_vertex = face.vertices.length;
+        
+        for(int j=0;j<n_vertex-2;j++){
+            
+            double[] x = new double[3];
+            double[] y = new double[3];
+            double[] z = new double[3];
+            
+            Vertex vert;
+            vert = face.vertices[0];
+            x[0] = vert.x;
+            y[0] = vert.y;
+            z[0] = vert.z;
+            vert = face.vertices[j+1];
+            x[1] = vert.x;
+            y[1] = vert.y;
+            z[1] = vert.z;
+            vert = face.vertices[j+2];
+            x[2] = vert.x;
+            y[2] = vert.y;
+            z[2] = vert.z;
+            
+            drawPolygon(x,y,z);
+        }
+        /*
+         
+        double[] x = new double[n_vertex];
+        double[] y = new double[n_vertex];
+        double[] z = new double[n_vertex];
+         
+        for (int j = 0; j < n_vertex; j++ ){
+            Vertex vert = face.vertices[j];
+            x[j] = vert.x;
+            y[j] = vert.y;
+            z[j] = vert.z;
+            
+            System.out.printf("point #");System.out.println(j);
+            
+            System.out.printf("x:");System.out.println(x[j]);
+            System.out.printf("y:");System.out.println(y[j]);
+            System.out.printf("z:");System.out.println(z[j]);
+        }
+        System.out.println();
 
+        drawPolygon(x, y, z);
+        */
+    }
+    
 	//再描画をする。
 	private void repaint(){
 		palette.getChildren().setAll();//paletteに登録してあるものをリセット

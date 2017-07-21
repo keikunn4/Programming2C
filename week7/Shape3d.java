@@ -11,11 +11,10 @@ public class Shape3d{
 		//ファイルを読み込んでvertexListとfaceListに格納する
 		//FileReader, StreamTokenizerを用いる
 		//以前演習でやった例を参照すること
-        ArrayList<String> input0 = new ArrayList<String>();
- 
+        
         try { // ファイル入出力の部分は，try .. catch で囲みます
             // ファイルをオープンするときは，FileReader を使います
-            FileReader fr = new FileReader("cube.txt");
+            FileReader fr = new FileReader(fileName);
             // ファイルの中身を連続した文字列として認識するときは，StreamTokenizer を使います．
             // 区切りは，空白や改行やTAB です．
             StreamTokenizer st = new StreamTokenizer(fr);
@@ -27,43 +26,33 @@ public class Shape3d{
                 // 数字なら TT_NUMBER を返します．
                 if (st.ttype == StreamTokenizer.TT_WORD) {
                     // 文字l列のときは sval, 数値 (double) のときは，nvalとします．
-                    System.out.println(st.sval);
-                    input0.add(st.sval);
+                    //System.out.println(st.sval);
+                    if( st.sval.equals("v") ){
+                        st.nextToken(); double x = st.nval;
+                        st.nextToken(); double y = st.nval;
+                        st.nextToken(); double z = st.nval;
+                        addVertex(x, y, z);
+                    }
+                    else if( st.sval.equals("f") ){
+                        st.nextToken();
+                        int n_index = (int)st.nval;
+                        int index[] = new int[n_index];
+                        for (int j = 0; j<n_index; j++){
+                            st.nextToken(); index[j] = (int)st.nval;
+                        }
+                        addFace(index);
+
+                    }
                 }else if(st.ttype == StreamTokenizer.TT_NUMBER) {
-                    // 文字l列のときは sval, 数値 (double) のときは，nvalとします．
                     System.out.println(Double.toString(st.nval));
-                    input0.add(Double.toString(st.nval));
+                    System.out.println("unexpected number type input.");
                 }
             }
             // ファイルを閉じます．
             fr.close();
             
-            System.out.println("file successfully parsed.");
-            System.out.println(input0.size());
-            String[] input = (String[])input0.toArray();
-            
-            System.out.println("file successfully converted.");
-            
-            for(int i = 0; i < input.length; i += get_nargs(input, i) ){
-                System.out.println(i);
-                if(input[i].equals("f")){
-                    int n_index = Integer.parseInt(input[i+1]);
-                    int index[] = new int[n_index];
-                    for (int j = 0; j<n_index; j++){
-                        index[j] = Integer.parseInt(input[i+1+1+j]);
-                    }
-                    addFace(index);
-                }
-                if(input[i].equals("v")){
-                    double x = Double.parseDouble(input[i+1]);
-                    double y = Double.parseDouble(input[i+2]);
-                    double z = Double.parseDouble(input[i+3]);
-                    addVertex(x, y, z);
-                }
-            }
-            
-            
-            
+            System.out.println("file successfully inputted.");
+            System.out.println();
             
         } catch (FileNotFoundException e) { // 例外処理
             System.out.println ("this file was not found.");
@@ -90,13 +79,4 @@ public class Shape3d{
         faceList.add(new_face);
 	}
     
-    private int get_nargs(String[] input, int i){
-        //f なら 1+3
-        //g なら 1+1+含まれる点の数
-        if(input[i].equals("f")) return 1+3;
-        if(input[i].equals("g")) return 1+1+Integer.parseInt(input[i+1]);
-        return 0;
-        
-    }
-
 }
